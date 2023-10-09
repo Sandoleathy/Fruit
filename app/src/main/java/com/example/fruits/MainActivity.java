@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             title.setText(R.string.app_name);
         }else{
             //directly change the text
-            banana.setText("香蕉");
-            apple.setText("绿苹果");
-            orange.setText("橘子");
-            title.setText("水果！");
+            banana.setText(R.string.banana_zh);
+            apple.setText(R.string.apple_zh);
+            orange.setText(R.string.orange_zh);
+            title.setText(R.string.app_name_zh);
         }
 
     }
