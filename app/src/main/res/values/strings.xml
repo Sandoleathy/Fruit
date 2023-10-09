@@ -3,10 +3,14 @@
     <string name="banana">Banana</string>
     <string name="apple">Green apple</string>
     <string name="orange">Orange</string>
-    <string name="banana_description">This is banana</string>
-    <string name="apple_description">This is apple</string>
-    <string name="orange_description">This is orange</string>
-    <string name="banana_description_zh">This is banana</string>
-    <string name="apple_description_zh">This is apple</string>
-    <string name="orange_description_zh">This is orange</string>
+    <string name="app_name_zh">水果！</string>
+    <string name="banana_zh">香蕉</string>
+    <string name="apple_zh">绿苹果</string>
+    <string name="orange_zh">橘子</string>
+    <string name="banana_description">A banana is like a little yellow curve. It has smooth skin on the outside and soft fruit on the inside. It tastes sweet, like eating candy, and it\'s really yummy! Eating bananas can make our bodies stronger because they have lots of good stuff in them. So, remember to eat bananas often!</string>
+    <string name="apple_description">A green apple is like a little green gem. They have shiny green skin, kind of like the color of grass. When you take a bite, it makes a crunchy sound, and you can taste the fresh apple flavor. Green apples are usually a bit sour, like sipping on juice, and they make you feel really awake and full of energy. Eating green apples can help you stay energetic, so they\'re a great choice! Give them a try!</string>
+    <string name="orange_description">An orange is like a little orange ball. It has an orange skin, sometimes with little bumps on it, like tiny hills. When you peel it, inside, there are lots of little juicy sections. When you eat an orange, it tastes sweet, just like eating natural orange candy. Oranges also help keep us healthy because they are full of vitamin C, which is really good for our bodies! So, remember to eat oranges—they\'re not only tasty but also good for you!</string>
+    <string name="banana_description_zh">香蕉就像是黄色的小弯弯，外面有一层光滑的皮，里面是软软的果肉。它有一种甜甜的味道，就像是在吃一块水果糖一样，非常好吃！吃香蕉还可以让我们的身体变得更强壮，因为它里面有很多有益的营养。所以，记得常常吃香蕉哦！</string>
+    <string name="apple_description_zh">绿色的苹果就像一颗小绿宝石一样。它们的外皮是亮闪闪的绿色，有点像草坪上的颜色。当你咬下去时，会听到脆脆的声音，然后感受到苹果的清新味道。这种苹果通常比较酸一点，就像吃了一口果汁一样，让你感觉非常醒目和活力满满。吃绿色的苹果有助于让你保持精力充沛，所以它们是很不错的选择哦！不妨尝试一下吧！</string>
+    <string name="orange_description_zh">橘子就像是一个小橙球。外面有一个橙色的皮，有时候上面会有一点点凹凸，就像小山丘一样。当你剥开皮，里面有很多小段，每一段都充满了汁液。吃橘子时，会感觉到一种甜甜的味道，就像在吃天然的橙子糖果一样。橘子还可以帮助我们保持健康，因为它们充满了维生素C，这对我们的身体很好！所以，记得吃橘子，它们不仅好吃还有益处哦！</string>
 </resources>
