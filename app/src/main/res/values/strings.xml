@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Fruits!</string>
+    <string name="banana">Banana</string>
+    <string name="apple">Green apple</string>
+    <string name="orange">Orange</string>
+    <string name="banana_description">This is banana</string>
+    <string name="apple_description">This is apple</string>
+    <string name="orange_description">This is orange</string>
+    <string name="banana_description_zh">This is banana</string>
+    <string name="apple_description_zh">This is apple</string>
+    <string name="orange_description_zh">This is orange</string>
+</resources>
