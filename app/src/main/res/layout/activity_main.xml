@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
     <include layout="@layout/title"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fruit_list"/>
+
+    <!--
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +77,6 @@
                 android:id="@+id/orange_text"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+    </ScrollView> -->
 
 </android.widget.LinearLayout>

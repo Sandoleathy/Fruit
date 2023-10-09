@@ -13,17 +13,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fruits.end.FruitAdapter;
+import com.example.fruits.end.FruitData;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     public static int LANGUAGE_ENGLISH = 0;
     public static int LANGUAGE_CHINESE = 1;
-    private String[] languageChoice = {"English","简体中文"};
+    private final String[] languageChoice = {"English","简体中文"};
     private static int languageMode = 0;
+    private List<FruitData> fruitData_en;
+    private List<FruitData> fruitData_zh;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -43,17 +51,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         language.setSelection(0);
         language.setOnItemSelectedListener(new LanguageSelectListener());
         //init font
-        TextView banana = findViewById(R.id.banana_text);
+        TextView title = findViewById(R.id.title);
+        title.setTypeface(font);
+
+        //init list_view
+        fruitData_en = new ArrayList<>();
+        fruitData_zh = new ArrayList<>();
+
+        fruitData_en.add(new FruitData(R.drawable.banana , R.string.banana , R.string.banana_description));
+        fruitData_en.add(new FruitData(R.drawable.green_apple , R.string.apple , R.string.apple_description));
+        fruitData_en.add(new FruitData(R.drawable.orange , R.string.orange , R.string.orange_description));
+
+        fruitData_zh.add(new FruitData(R.drawable.banana , R.string.banana_zh , R.string.banana_description_zh));
+        fruitData_zh.add(new FruitData(R.drawable.green_apple , R.string.apple_zh , R.string.apple_description_zh));
+        fruitData_zh.add(new FruitData(R.drawable.orange , R.string.orange_zh , R.string.orange_description_zh));
+
+        changeLanguage();
+        /*TextView banana = findViewById(R.id.banana_text);
         TextView apple = findViewById(R.id.apple_text);
         TextView orange = findViewById(R.id.orange_text);
 
         banana.setTypeface(font);
         apple.setTypeface(font);
         orange.setTypeface(font);
-        TextView title = findViewById(R.id.title);
-        /*TextView spinner_text =findViewById(R.id.language_spinner);
-        spinner_text.setTypeface(font);*/
-        title.setTypeface(font);
+
         //init listener
         ImageView banana_image = findViewById(R.id.banana_image);
         ImageView apple_image = findViewById(R.id.apple_image);
@@ -64,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         apple_image.setOnClickListener(this);
         apple.setOnClickListener(this);
         orange_image.setOnClickListener(this);
-        orange.setOnClickListener(this);
+        orange.setOnClickListener(this);*/
 
     }
 
-    @Override
+    /*@Override
     public void onClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putInt("language" , languageMode);
@@ -93,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             toOrange.putExtras(bundle);
             startActivity(toOrange);
         }
-    }
+    }*/
 
     /**
      * The language change is too hard
@@ -103,21 +124,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * But it JUST WORK!
      */
     public void changeLanguage(){
-        TextView banana = findViewById(R.id.banana_text);
-        TextView apple = findViewById(R.id.apple_text);
-        TextView orange = findViewById(R.id.orange_text);
+        ListView fruitList = findViewById(R.id.fruit_list);
         TextView title = findViewById(R.id.title);
         if(languageMode == LANGUAGE_ENGLISH){
             //directly change the text
-            banana.setText(R.string.banana);
-            apple.setText(R.string.apple);
-            orange.setText(R.string.orange);
+            FruitAdapter adapter = new FruitAdapter(this,R.layout.item_list,fruitData_en);
+            fruitList.setAdapter(adapter);
             title.setText(R.string.app_name);
         }else{
             //directly change the text
-            banana.setText(R.string.banana_zh);
-            apple.setText(R.string.apple_zh);
-            orange.setText(R.string.orange_zh);
+            FruitAdapter adapter = new FruitAdapter(this , R.layout.item_list , fruitData_zh);
+            fruitList.setAdapter(adapter);
             title.setText(R.string.app_name_zh);
         }
 
