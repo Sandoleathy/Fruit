@@ -26,7 +26,7 @@ public class FruitAdapter extends ArrayAdapter<FruitData> {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_list,parent,false);
         ImageView imageView = view.findViewById(R.id.fruit_image);
         TextView textView = view.findViewById(R.id.fruit_text);
-        imageView.setImageResource(fruit.getImageID());
+        //imageView.setImageResource(R.drawable.banana);
         textView.setText(fruit.getName());
         return view;
     }
