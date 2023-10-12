@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -57,6 +58,16 @@ public class Description extends AppCompatActivity {
             params.height = (int)(350 * (MainActivity.dpi / 160));
             image.setLayoutParams(params);
         }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+        if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_main);
+        } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_main_landscape);
+        }
+        changeLanguage();
     }
     public void changeLanguage(){
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/SmallCheese.ttf");

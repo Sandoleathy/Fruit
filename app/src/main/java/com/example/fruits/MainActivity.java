@@ -4,6 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fruits.end.FruitAdapter;
 import com.example.fruits.end.FruitData;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static float screenWidth = 0;
     public static float screenHeight = 0;
     public static float dpi = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -80,6 +85,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         changeLanguage();
 
     }
+    @Override
+    public void onConfigurationChanged(Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+        if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_main);
+        } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_main_landscape);
+        }
+        changeLanguage();
+    }
 
 
     /**
@@ -95,13 +110,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         TextView title = findViewById(R.id.title);
         if(languageMode == LANGUAGE_ENGLISH){
             //directly change the text
-            FruitAdapter adapter = new FruitAdapter(this,R.layout.item_list,fruitData_en);
+            FruitAdapter adapter;
+            if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+                adapter = new FruitAdapter(this,R.layout.item_list,fruitData_en);
+            }else{
+                Toast.makeText(MainActivity.this , "landscape" , Toast.LENGTH_SHORT).show();
+                adapter = new FruitAdapter(this,R.layout.item_list_landscape,fruitData_en);
+            }
             adapter.setFont(font);
             fruitList.setAdapter(adapter);
             title.setText(R.string.app_name);
         }else{
             //directly change the text
-            FruitAdapter adapter = new FruitAdapter(this , R.layout.item_list , fruitData_zh);
+            FruitAdapter adapter;
+            if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+                adapter = new FruitAdapter(this,R.layout.item_list,fruitData_zh);
+            }else{
+                adapter = new FruitAdapter(this,R.layout.item_list_landscape,fruitData_zh);
+            }
             adapter.setFont(font);
             fruitList.setAdapter(adapter);
             title.setText(R.string.app_name_zh);
