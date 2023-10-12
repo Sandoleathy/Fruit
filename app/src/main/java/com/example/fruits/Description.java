@@ -4,12 +4,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,8 +43,7 @@ public class Description extends AppCompatActivity {
             image.setImageResource(data.getInt("image"));
             imageID = data.getInt("image");
         }
-
-
+        //init spinner for language switcher
         Spinner language = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.item_select,languageChoice);
         language.setAdapter(adapter);
@@ -48,6 +51,12 @@ public class Description extends AppCompatActivity {
         language.setOnItemSelectedListener(new LanguageSelectListener());
 
         changeLanguage();
+        //If the screen is too large, stretch the height of the image
+        if(MainActivity.screenWidth > 1100){
+            ViewGroup.LayoutParams params = image.getLayoutParams();
+            params.height = (int)(350 * (MainActivity.dpi / 160));
+            image.setLayoutParams(params);
+        }
     }
     public void changeLanguage(){
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/SmallCheese.ttf");
@@ -70,17 +79,23 @@ public class Description extends AppCompatActivity {
                 body.setText(R.string.orange_description);
             }
         }else{
-            head.setText("水果！");
+            head.setText(R.string.app_name_zh);
             if(imageID == R.drawable.banana){
-                title.setText("香蕉");
+                title.setText(R.string.banana_zh);
                 body.setText(R.string.banana_description_zh);
             } else if (imageID == R.drawable.green_apple) {
-                title.setText("苹果");
+                title.setText(R.string.apple_zh);
                 body.setText(R.string.apple_description_zh);
             } else if(imageID == R.drawable.orange){
-                title.setText("橘子");
+                title.setText(R.string.orange_zh);
                 body.setText(R.string.orange_description_zh);
             }
+        }
+        //If the screen is too small, the title should be left to prevent overlap
+        if(MainActivity.screenWidth <= 500){
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) head.getLayoutParams();
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
+            head.setLayoutParams(params);
         }
     }
     class LanguageSelectListener implements AdapterView.OnItemSelectedListener{
