@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static int LANGUAGE_ENGLISH = 0;
     public static int LANGUAGE_CHINESE = 1;
     private final String[] languageChoice = {"English","简体中文"};
-    private static int languageMode = 0;
+    public static int languageMode = -1;
     private List<FruitData> fruitData_en;
     private List<FruitData> fruitData_zh;
     public static float screenWidth = 0;
@@ -40,10 +40,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
+        //get screen information
         Display display = getWindowManager().getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
@@ -53,12 +55,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         dpi = (int) (dm.density*160);
 
+        //set navigation bar
         ActionBar bar = getSupportActionBar();
         //hide the default tool bar
         if(bar != null){
             bar.hide();
         }
-        //font
+        //set font
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/SmallCheese.ttf");
         //set language spinner
         Spinner language = findViewById(R.id.spinner);
@@ -82,20 +85,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         fruitData_zh.add(new FruitData(R.drawable.green_apple , R.string.apple_zh , R.string.apple_description_zh));
         fruitData_zh.add(new FruitData(R.drawable.orange , R.string.orange_zh , R.string.orange_description_zh));
 
-        changeLanguage();
-
+        //to save the resource in device the changeLanguage will be use in onResume function
+        //changeLanguage();
     }
-    @Override
-    public void onConfigurationChanged(Configuration configuration) {
-        super.onConfigurationChanged(configuration);
-        if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(R.layout.activity_main);
-        } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_main_landscape);
-        }
-        changeLanguage();
-    }
-
 
     /**
      * The language change is too hard
@@ -108,37 +100,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/SmallCheese.ttf");
         ListView fruitList = findViewById(R.id.fruit_list);
         TextView title = findViewById(R.id.title);
+        FruitAdapter adapter;
         if(languageMode == LANGUAGE_ENGLISH){
             //directly change the text
-            FruitAdapter adapter;
-            if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-                adapter = new FruitAdapter(this,R.layout.item_list,fruitData_en);
-            }else{
-                Toast.makeText(MainActivity.this , "landscape" , Toast.LENGTH_SHORT).show();
-                adapter = new FruitAdapter(this,R.layout.item_list_landscape,fruitData_en);
-            }
+            adapter = new FruitAdapter(this,R.layout.item_list,fruitData_en);
             adapter.setFont(font);
             fruitList.setAdapter(adapter);
             title.setText(R.string.app_name);
         }else{
             //directly change the text
-            FruitAdapter adapter;
-            if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-                adapter = new FruitAdapter(this,R.layout.item_list,fruitData_zh);
-            }else{
-                adapter = new FruitAdapter(this,R.layout.item_list_landscape,fruitData_zh);
-            }
+            adapter = new FruitAdapter(this,R.layout.item_list,fruitData_zh);
             adapter.setFont(font);
             fruitList.setAdapter(adapter);
             title.setText(R.string.app_name_zh);
         }
+        fruitList.setAdapter(adapter);
         fruitList.setOnItemClickListener(this);
-
+        //if the screen is too small for center title
+        //move it to left side
+        //that change is too simple so it doesn't need an extra layout
         if(screenWidth <= 500){
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
             params.addRule(RelativeLayout.CENTER_HORIZONTAL, 0);
             title.setLayoutParams(params);
         }
+    }
+
+    /**
+     * use onResume to synchronize the language mode
+     */
+    @Override
+    public void onResume() {
+        //Toast.makeText(this,"onResume",Toast.LENGTH_LONG).show();
+        changeLanguage();
+        super.onResume();
     }
 
     @Override

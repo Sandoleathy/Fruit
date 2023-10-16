@@ -17,20 +17,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Description extends AppCompatActivity {
     public static int LANGUAGE_ENGLISH = 0;
     public static int LANGUAGE_CHINESE = 1;
-    private String[] languageChoice = {"English","简体中文"};
-    private int languageMode;
+    private final String[] languageChoice = {"English","简体中文"};
     private int imageID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_description);
+        //If the screen is too large, stretch the height of the image
+        if(MainActivity.screenWidth > 1100){
+            setContentView(R.layout.activity_description_big);
+            //Toast.makeText(this,"big one",Toast.LENGTH_LONG).show();
+        }else{
+            setContentView(R.layout.activity_description);
+        }
+        //hide the default too bar
         ActionBar bar = getSupportActionBar();
-        //hide the default tool bar
-        languageMode = LANGUAGE_ENGLISH;
         imageID = 0;
         if(bar != null){
             bar.hide();
@@ -40,7 +45,6 @@ public class Description extends AppCompatActivity {
         Intent fromMain = getIntent();
         Bundle data = fromMain.getExtras();
         if(data != null){
-            languageMode = data.getInt("language");
             image.setImageResource(data.getInt("image"));
             imageID = data.getInt("image");
         }
@@ -48,26 +52,11 @@ public class Description extends AppCompatActivity {
         Spinner language = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.item_select,languageChoice);
         language.setAdapter(adapter);
-        language.setSelection(languageMode);
+        language.setSelection(MainActivity.languageMode);
         language.setOnItemSelectedListener(new LanguageSelectListener());
 
         changeLanguage();
-        //If the screen is too large, stretch the height of the image
-        if(MainActivity.screenWidth > 1100){
-            ViewGroup.LayoutParams params = image.getLayoutParams();
-            params.height = (int)(350 * (MainActivity.dpi / 160));
-            image.setLayoutParams(params);
-        }
-    }
-    @Override
-    public void onConfigurationChanged(Configuration configuration) {
-        super.onConfigurationChanged(configuration);
-        if(configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setContentView(R.layout.activity_main);
-        } else if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.activity_main_landscape);
-        }
-        changeLanguage();
+
     }
     public void changeLanguage(){
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/SmallCheese.ttf");
@@ -77,7 +66,7 @@ public class Description extends AppCompatActivity {
         title.setTypeface(font);
         body.setTypeface(font);
         head.setTypeface(font);
-        if(languageMode == LANGUAGE_ENGLISH){
+        if(MainActivity.languageMode == LANGUAGE_ENGLISH){
             head.setText(R.string.app_name);
             if(imageID == R.drawable.banana){
                 title.setText(R.string.banana);
@@ -109,17 +98,18 @@ public class Description extends AppCompatActivity {
             head.setLayoutParams(params);
         }
     }
+
     class LanguageSelectListener implements AdapterView.OnItemSelectedListener{
         //listener
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if(languageChoice[i] == languageChoice[0]){
                 //Toast.makeText(MainActivity.this , "English Mode" , Toast.LENGTH_SHORT).show();
-                languageMode = LANGUAGE_ENGLISH;
+                MainActivity.languageMode = LANGUAGE_ENGLISH;
                 changeLanguage();
             }else if(languageChoice[i] == languageChoice[1]){
                 //Toast.makeText(MainActivity.this , "中文模式" , Toast.LENGTH_SHORT).show();
-                languageMode = LANGUAGE_CHINESE;
+                MainActivity.languageMode = LANGUAGE_CHINESE;
                 changeLanguage();
             }
         }

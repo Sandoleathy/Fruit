@@ -37,7 +37,7 @@ public class FruitAdapter extends ArrayAdapter<FruitData>{
         }
         if(MainActivity.screenWidth > 1100){
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
-            params.height = (int)(350 * (MainActivity.dpi / 160));
+            params.height = (int)(500 * (MainActivity.dpi / 160));
             imageView.setLayoutParams(params);
         }
         return view;
